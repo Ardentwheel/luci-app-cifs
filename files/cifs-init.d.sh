@@ -165,7 +165,7 @@ start() {
 		}
 	else
 
-	echo "Cifs Umount is Disabled.Please enter The Web Cotrol Center to enable it."
+	echo "Cifs Umount is Disabled.Please enter the Web Cotrol Center to enable it."
 
 	fi
 }
@@ -212,7 +212,7 @@ restart() {
 		}
 	else
 
-	echo "Cifs Umount is Disabled.Please enter The Web Cotrol Center to enable it."
+	echo "Cifs Umount is Disabled.Please enter the Web Cotrol Center to enable it."
 
 	fi
 }
