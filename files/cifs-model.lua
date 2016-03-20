@@ -1,7 +1,8 @@
-
 -- Copyright 2015
 -- Matthew
 -- Licensed to the public under the Apache License 2.0.
+
+
 
 m = Map("cifs", translate("Mounting NAT drives"))
 
@@ -9,7 +10,9 @@ s = m:section(TypedSection, "cifs", "Cifs")
 s.anonymous = true
 
 s:tab("general",  translate("General Settings"))
-s:tab("template", translate("Edit Template"))
+
+switch = s:taboption("general", Flag, "enabled", translate("Enable"))
+switch.rmempty = false
 
 s:taboption("general", Value, "workgroup", translate("Workgroup"))
 s:taboption("general", Value, "mountarea", translate("Mount_Area"))
@@ -17,7 +20,7 @@ s:taboption("general", Value, "delay", translate("Delay"))
 s:taboption("general", Value, "iocharset", translate("Iocharset"),
         translate("Character Encoding"))
 
-s = m:section(TypedSection, "sambashare", translate("Shared Directories"))
+s = m:section(TypedSection, "natshare", translate("NAT Drivers"))
 s.anonymous = true
 s.addremove = true
 s.template = "cbi/tblsection"
@@ -28,14 +31,14 @@ am.size = 6
 bm = s:option(Value, "name", translate("Name"))
 bm.size = 6
 
-pth = s:option(Value, "path", translate("Path"))
+pth = s:option(Value, "natpath", translate("NatPath"))
 if nixio.fs.access("/etc/config/fstab") then
         pth.titleref = luci.dispatcher.build_url("admin", "system", "fstab")
 end
 
-cm = s:option(Value, "arguments", translate("Arguments"))
+cm = s:option(Value, "agm", translate("Arguments"))
 cm.rmempty = true
-cm.size = 4
+cm.size = 8
 
 ro = s:option(Flag, "nounix", translate("Disable Unix Extensions"))
 ro.rmempty = false
