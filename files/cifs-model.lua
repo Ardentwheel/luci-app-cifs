@@ -25,12 +25,26 @@ s:tab("general",  translate("General Settings"))
 switch = s:taboption("general", Flag, "enabled", translate("Enable"))
 switch.rmempty = false
 
-s:taboption("general", Value, "workgroup", translate("Workgroup"))
-s:taboption("general", Value, "mountarea", translate("Mount_Area"))
-s:taboption("general", Value, "delay", translate("Delay"))
-s:taboption("general", Value, "iocharset", translate("Iocharset"),
-        translate("Character Encoding"))
+workgroup = s:taboption("general", Value, "workgroup", translate("Workgroup"))
+workgroup.default = "WORKGROUP"
 
+mountarea = s:taboption("general", Value, "mountarea", translate("Mount Area"))
+mountarea.default = "/tmp/mnt"
+mountarea.rmempty = false
+
+delay = s:taboption("general", Value, "delay", translate("Delay")
+	,translate("Delay command runing for wait till your drivers online.\n Only work in start mode(/etc/init.d/cifs start) "))
+delay:value("0")
+delay:value("3")
+delay:value("5")
+delay:value("7")
+delay:value("10")
+delay.default = "5"
+
+
+iocharset = s:taboption("general", Value, "iocharset", translate("Iocharset"),
+        translate("Character Encoding"))
+iocharset.default = "utf8"
 
 
 
@@ -41,9 +55,11 @@ s.template = "cbi/tblsection"
 
 server = s:option(Value, "server", translate("Server"))
 server.size = 6
+server.rmempty = false
 
 name = s:option(Value, "name", translate("Name"))
 name.size = 6
+name.rmempty = false
 
 pth = s:option(Value, "natpath", translate("NatPath"))
 if nixio.fs.access("/etc/config/fstab") then
@@ -69,6 +85,7 @@ guest.disabled = "0"
 
 users = s:option(Value, "users", translate("Users"))
 users.size = 3
+users.rmempty = true
 
 pwd = s:option(Value, "pwd", translate("password"))
 pwd.rmempty = true
