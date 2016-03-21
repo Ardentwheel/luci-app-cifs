@@ -192,6 +192,8 @@ restart() {
 	echo "Cifs Mmount is Enabled."
 	echo "Starting..."
 
+	/etc/init.d/cifs enable
+
 	config_foreach mount_natshare natshare
 
 	/etc/init.d/samba restart
@@ -199,6 +201,8 @@ restart() {
 	echo "Cifs Mount succeed."
 		}
 	else
+
+	/etc/init.d/cifs disable
 
 	echo "Cifs Umount is Disabled.Please enter The Web Cotrol Center to enable it."
 
