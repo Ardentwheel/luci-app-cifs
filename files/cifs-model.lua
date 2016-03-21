@@ -28,7 +28,8 @@ switch.rmempty = false
 workgroup = s:taboption("general", Value, "workgroup", translate("Workgroup"))
 workgroup.default = "WORKGROUP"
 
-mountarea = s:taboption("general", Value, "mountarea", translate("Mount Area"))
+mountarea = s:taboption("general", Value, "mountarea", translate("Mount Area")
+	, translate("All the Mounted NAT Drives will be centralized into this folder."))
 mountarea.default = "/tmp/mnt"
 mountarea.rmempty = false
 
@@ -42,8 +43,8 @@ delay:value("10")
 delay.default = "5"
 
 
-iocharset = s:taboption("general", Value, "iocharset", translate("Iocharset"),
-        translate("Character Encoding"))
+iocharset = s:taboption("general", Value, "iocharset", translate("Iocharset")
+        , translate("Character Encoding"))
 iocharset.default = "utf8"
 
 
@@ -53,15 +54,18 @@ s.anonymous = true
 s.addremove = true
 s.template = "cbi/tblsection"
 
-server = s:option(Value, "server", translate("Server"))
+server = s:option(Value, "server", translate("Server")
+        , translate("Server Name"))
 server.size = 6
 server.rmempty = false
 
-name = s:option(Value, "name", translate("Name"))
+name = s:option(Value, "name", translate("Name")
+        , translate("Mouting Folder Name"))
 name.size = 6
 name.rmempty = false
 
-pth = s:option(Value, "natpath", translate("NatPath"))
+pth = s:option(Value, "natpath", translate("NatPath")
+        , translate("NAT driver location"))
 if nixio.fs.access("/etc/config/fstab") then
         pth.titleref = luci.dispatcher.build_url("admin", "system", "fstab")
 end
