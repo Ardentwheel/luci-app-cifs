@@ -18,7 +18,7 @@ define Package/luci-app-cifs
 endef
 
 define Package/luci-app-cifs/description
-Allows you using the Web Cotrol Center to mount networked drives.
+Allows you to use the Web Cotrol Center to mount networked drives.
 endef
 
 define Build/Prepare

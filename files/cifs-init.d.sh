@@ -46,7 +46,6 @@ mount_natshare() {
 	local guest
 	local users
 	local pwd
-	local nounix
 	local agm
 	
 	local _mount_path
@@ -58,7 +57,6 @@ mount_natshare() {
 	config_get guest $1 guest
 	config_get users $1 users
 	config_get pwd $1 pwd
-	config_get nounix $1 nounix
 	config_get agm $1 agm
 
 	if [ $guest == 1 ]
@@ -83,15 +81,6 @@ mount_natshare() {
 	}
 	fi
 	fi
-
-	if [ $nounix != 1 ]
-	then
-	NOUNIX=""
-#	echo "true-${name}-NOUNIX:${NOUNIX}-end"
-	else
-	NOUNIX=",nounix"
-#	echo "false-${name}-NOUNIX:${NOUNIX}-end"
-	fi
 	
 	if [ $agm ]
 	then
@@ -103,7 +92,7 @@ mount_natshare() {
 	fi
 
 	append _mount_path "$MOUNTAREA/${server}-$name"
-	append _agm "-o ${USERS}${GUEST}domain=$WORKGROUPD,iocharset=$IOCHARSET$NOUNIX$AGM"
+	append _agm "-o ${USERS}${GUEST}domain=$WORKGROUPD,iocharset=$IOCHARSET$AGM"
 
 #	echo "mkdir -p $_mount_path"
 #	echo "mount -t cifs $natpath $_mount_path $_agm"
@@ -165,7 +154,7 @@ start() {
 		}
 	else
 
-	echo "Cifs Umount is Disabled.Please enter the Web Cotrol Center to enable it."
+	echo "Cifs Umount is Disabled.Please enter The Web Cotrol Center to enable it."
 
 	fi
 }
@@ -212,7 +201,7 @@ restart() {
 		}
 	else
 
-	echo "Cifs Umount is Disabled.Please enter the Web Cotrol Center to enable it."
+	echo "Cifs Umount is Disabled.Please enter The Web Cotrol Center to enable it."
 
 	fi
 }
