@@ -2,6 +2,8 @@
 # luci-cifs-app
 ###### Mounting NAT drives
 
+![](http://ww4.sinaimg.cn/large/6c12375ejw1f25g9faos5j213h0p0n0m.jpg)
+
 ### Options
 
 * General Settings
