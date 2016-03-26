@@ -36,9 +36,9 @@ define Package/luci-app-cifs/install
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
 
-	$(INSTALL_CONF) ./files/dnsforwarder.config $(1)/etc
+
 	$(INSTALL_CONF) ./files/cifs-config $(1)/etc/config/cifs
-	$(INSTALL_BIN) ./files/cifs-init.d.sh $(1)/etc/init.d/cifs
+	$(INSTALL_CONF) ./files/cifs-init.d.sh $(1)/etc/init.d/cifs.sh
 	$(INSTALL_DATA) ./files/cifs-controller.lua $(1)/usr/lib/lua/luci/controller/cifs.lua
 	$(INSTALL_DATA) ./files/cifs-model.lua $(1)/usr/lib/lua/luci/model/cbi/cifs.lua
 	endef
