@@ -32,15 +32,17 @@ endef
 
 define Package/luci-app-cifs/install
 	$(INSTALL_DIR) $(1)/etc/config
+	$(INSTALL_DATA) ./files/cifs-config $(1)/etc/config/cifs
+	
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi
+	$(INSTALL_BIN) ./files/cifs-init.d.sh $(1)/etc/init.d/cifs.sh
+
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/controller
-
-
-	$(INSTALL_CONF) ./files/cifs-config $(1)/etc/config/cifs
-	$(INSTALL_CONF) ./files/cifs-init.d.sh $(1)/etc/init.d/cifs.sh
 	$(INSTALL_DATA) ./files/cifs-controller.lua $(1)/usr/lib/lua/luci/controller/cifs.lua
+
+	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi
 	$(INSTALL_DATA) ./files/cifs-model.lua $(1)/usr/lib/lua/luci/model/cbi/cifs.lua
+
 	endef
 
 
