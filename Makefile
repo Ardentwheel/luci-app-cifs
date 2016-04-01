@@ -3,34 +3,48 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=luci-app-cifs
+PKG_NAME:=luci-cifs-app
 PKG_VERSION:= 0.1
 PKG_RELEASE:=2
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/luci-app-cifs
+define Package/$(PKG_NAME)
 	SECTION:=luci
-	CATEGORY:=Luci
-	SUBMENU:=3. Applications
-	TITLE:=mounting Nat drives
+	CATEGORY:=LuCI
+	TITLE:=Mounting Nat Drives
+	PKGARCH:=all
 	DEPENDS:=+kmod-fs-cifs
 endef
 
-define Package/luci-app-cifs/description
-Allows you to use the Web Cotrol Center to mount networked drives.
+define Package/$(PKG_NAME)/description
+	Allows you to use the Web Cotrol Center to mount networked drives.
 endef
 
-define Build/Prepare
+define Build/Prepare 
 endef
 
 define Build/Configure
 endef
 
-define Build/Compile
+define Package/$(PKG_NAME)/conffiles
+/etc/config/cifs
+/etc/init.d/cifs.sh
 endef
 
-define Package/luci-app-cifs/install
+define Package/$(PKG_NAME)/preinst
+endef
+
+define Package/$(PKG_NAME)/postinst
+#!/bin/sh
+	/etc/init.d/cifs.sh enable
+exit 0
+endef
+
+define Package/$(PKG_NAME)/prerm 
+endef
+
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_DATA) ./files/cifs-config $(1)/etc/config/cifs
 	
@@ -42,8 +56,7 @@ define Package/luci-app-cifs/install
 
 	$(INSTALL_DIR) $(1)/usr/lib/lua/luci/model/cbi
 	$(INSTALL_DATA) ./files/cifs-model.lua $(1)/usr/lib/lua/luci/model/cbi/cifs.lua
+endef
 
-	endef
 
-
-$(eval $(call BuildPackage,luci-app-cifs))
+$(eval $(call BuildPackage,$(PKG_NAME)))
