@@ -14,6 +14,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/luci-app-cifs
 	SECTION:=luci
 	CATEGORY:=LuCI
+	SUBMENU:=3. Applications
 	TITLE:=Mounting Nat Drives
 	PKGARCH:=all
 	DEPENDS:=+kmod-fs-cifs
