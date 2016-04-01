@@ -5,7 +5,13 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-cifs-app
 PKG_VERSION:= 0.1
-PKG_RELEASE:=2
+PKG_RELEASE:= 1
+
+PKG_SOURCE_PROTO:=git
+PKG_SOURCE_URL:=https://github.com/matthew728960/luci-app-cifs.git
+PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_SOURCE_VERSION:=e3a09c0a895987763dd3247d0ce99ddaf89a95be
+PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
 
 include $(INCLUDE_DIR)/package.mk
 
