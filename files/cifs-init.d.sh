@@ -33,9 +33,6 @@ cifs_header() {
 	then
 	DELAY=$delay
 	fi
-
-#	echo "ENABLED:$ENABLED enabled:$enabled"
-
 }
 
 mount_natshare() {
@@ -60,47 +57,35 @@ mount_natshare() {
 
 	if [ $guest == 1 ]
 	then 
-	GUEST="guest,"
-	USERS=""
-#	echo "true-${name}-USERS:${USERS}-end"
-#	echo "true-${name}-GUEST:${GUEST}-end"
-	else if [ $guest == 0 ]
-	then {
-	if [ $users ]
-	then
-	USERS="username=$users,password=$pwd,"
-	GUEST=""
-#	echo "true-${name}-USERS:${USERS}-end"
-	else
-	USERS=""
-	GUEST="guest,"
-#	echo "false-${name}-USERS:${USERS}-end"
-	fi
-#	echo "false-${name}-GUEST:${GUEST}-end"
-	}
-	fi
+		GUEST="guest,"
+		USERS=""
+		else if [ $guest == 0 ]
+		then {
+			if [ $users ]
+			then
+				USERS="username=$users,password=$pwd,"
+				GUEST=""
+			else
+				USERS=""
+				GUEST="guest,"
+			fi
+			}
+		fi
 	fi
 	
 	if [ $agm ]
 	then
-	AGM=",$agm"
-#	echo "true-${name}-AGM:${AGM}-end"
+		AGM=",$agm"
 	else
-	AGM=""
-#	echo "false-${name}-AGM:${AGM}-end"
+		AGM=""
 	fi
 
 	append _mount_path "$MOUNTAREA/${server}-$name"
 	append _agm "-o ${USERS}${GUEST}domain=$WORKGROUPD,iocharset=$IOCHARSET$AGM"
-
-#	echo "mkdir -p $_mount_path"
-#	echo "mount -t cifs $natpath $_mount_path $_agm"
-#	echo ""
-
+	
 	sleep 1
 	mkdir -p $_mount_path
 	mount -t cifs $natpath $_mount_path $_agm
-
 }
 
 umount_natshare() {
@@ -112,8 +97,6 @@ umount_natshare() {
 	config_get name $1 name
 
 	append _mount_path "$MOUNTAREA/${server}-$name"
-	
-#	echo "$_mount_path -end"
 
 	sleep 1
 	umount -d -l $_mount_path
@@ -132,29 +115,23 @@ start() {
 
 	if [ $ENABLED == 1 ]
 	then {
+		echo "Cifs Mount is Enabled."
+		echo "Starting..."
+		if [ $DELAY != 0 ]
+		then
+			sleep $DELAY
+			echo "DELAY Operation ${DELAY}s"
+		else
+			echo "Not DELAY ${DELAY}s"
+		fi
 
-	echo "Cifs Mount is Enabled."
-	echo "Starting..."
+		config_foreach mount_natshare natshare
+		/etc/init.d/samba restart
 
-	if [ $DELAY != 0 ]
-	then
-	sleep $DELAY
-	echo "DELAY Operation ${DELAY}s"
-	else
-	echo "Not DELAY ${DELAY}s"
-	fi
-
-	config_foreach mount_natshare natshare
-
-	/etc/init.d/samba restart
-
-	echo "Cifs Mount succeed."
-
+		echo "Cifs Mount succeed."
 		}
 	else
-
-	echo "Cifs Umount is Disabled.Please enter The Web Cotrol Center to enable it."
-
+		echo "Cifs Mount is Disabled.Please enter The Web Cotrol Center to enable it."
 	fi
 }
 
@@ -170,7 +147,7 @@ stop() {
 }
 
 restart() {
-	echo "Umounting..."
+	echo 'Umounting... '
 	
 	config_load cifs
 	config_foreach cifs_header cifs
@@ -181,30 +158,21 @@ restart() {
 
 	echo "Cifs Umount succeed."
 
-#	echo "ENABLED:$ENABLED enabled:$enabled"
-
-	echo ""
-	echo "Checking..."
+	echo ''
+	echo 'Checking... '
 
 	if [ $ENABLED == 1 ]
 	then {
+		echo 'Cifs Mmount is Enabled. '
+		echo 'Starting... '
 
-	echo "Cifs Mmount is Enabled."
-	echo "Starting..."
+		config_foreach mount_natshare natshare
+		/etc/init.d/samba restart
 
-	/etc/init.d/cifs enable
-
-	config_foreach mount_natshare natshare
-
-	/etc/init.d/samba restart
-
-	echo "Cifs Mount succeed."
+		echo "Cifs Mount succeed."
 		}
 	else
-
-	/etc/init.d/cifs disable
-
-	echo "Cifs Umount is Disabled.Please enter The Web Cotrol Center to enable it."
-
+		/etc/init.d/cifs disable
+		echo "Cifs Mount is Disabled.Please enter The Web Cotrol Center to enable it."
 	fi
 }
