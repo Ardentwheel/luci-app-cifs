@@ -3,19 +3,15 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=luci-cifs-app
-PKG_VERSION:= 0.1
+PKG_NAME:=luci-app-cifs
+PKG_VERSION:= 1
 PKG_RELEASE:= 1
 
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/matthew728960/luci-app-cifs.git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=be9f5a27c22db3b75dd6d806728d0c3f1a29df63
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION)-$(PKG_SOURCE_VERSION).tar.gz
+PKG_BUILD_DIR := $(BUILD_DIR)/$(PKG_NAME)
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/$(PKG_NAME)
+define Package/luci-app-cifs
 	SECTION:=luci
 	CATEGORY:=LuCI
 	TITLE:=Mounting Nat Drives
@@ -23,34 +19,36 @@ define Package/$(PKG_NAME)
 	DEPENDS:=+kmod-fs-cifs
 endef
 
-define Package/$(PKG_NAME)/description
+define Package/luci-app-cifs/description
 	Allows you to use the Web Cotrol Center to mount networked drives.
 endef
 
-define Build/Prepare 
+define Build/Prepare
 endef
 
 define Build/Configure
 endef
 
-define Package/$(PKG_NAME)/conffiles
+define Build/Compile
+endef
+
+define Package/luci-app-cifs/conffiles
 /etc/config/cifs
-/etc/init.d/cifs.sh
 endef
 
-define Package/$(PKG_NAME)/preinst
+define Package/luci-app-cifs/preinst
 endef
 
-define Package/$(PKG_NAME)/postinst
+define Package/luci-app-cifs/postinst
 #!/bin/sh
 	/etc/init.d/cifs.sh enable
 exit 0
 endef
 
-define Package/$(PKG_NAME)/prerm 
+define Package/luci-app-cifs/prerm 
 endef
 
-define Package/$(PKG_NAME)/install
+define Package/luci-app-cifs/install
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_DATA) ./files/cifs-config $(1)/etc/config/cifs
 	
@@ -64,5 +62,4 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_DATA) ./files/cifs-model.lua $(1)/usr/lib/lua/luci/model/cbi/cifs.lua
 endef
 
-
-$(eval $(call BuildPackage,$(PKG_NAME)))
+$(eval $(call BuildPackage,luci-app-cifs))
