@@ -17,7 +17,7 @@ define Package/luci-app-cifs
 	SUBMENU:=3. Applications
 	TITLE:=Mounting Nat Drives
 	PKGARCH:=all
-	DEPENDS:=+kmod-fs-cifs
+	DEPENDS:=+kmod-fs-cifs +kmod-nls-utf8
 endef
 
 define Package/luci-app-cifs/description
